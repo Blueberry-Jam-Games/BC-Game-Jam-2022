@@ -18,6 +18,8 @@ public class GameplayManager : MonoBehaviour
 
     private List<RuntimeSlide> allSlides = new List<RuntimeSlide>();
 
+    List<Person> tagRemoval = new List<Person>();
+
     void Start()
     {
         Debug.Log("Start");
@@ -59,8 +61,6 @@ public class GameplayManager : MonoBehaviour
         }
     }
     
-    List<Person> tagRemoval = new List<Person>();
-
     private void FlagTimedOut()
     {
         for (int i = 0, count = allPeople.Count; i < count; i++)
