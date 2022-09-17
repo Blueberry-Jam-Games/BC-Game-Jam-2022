@@ -76,10 +76,12 @@ public class GameplayManager : MonoBehaviour
 
     public void ProcessLineups()
     {
+        Debug.Log("Lineup processing");
         // Process each water slide removing people from the queues
         foreach(RuntimeSlide rs in allSlides)
         {
             rs.capacityThisTick += rs.parent.staffVsCapacity[rs.currentStaff];
+            Debug.Log($"Slide {rs.name}: Capacity this tick {rs.capacityThisTick}, lineup length {rs.lineup.Count}");
 
             while(rs.lineup.Count > 0 && rs.capacityThisTick > rs.lineup.Peek().partySize)
             {
@@ -114,6 +116,7 @@ public class GameplayManager : MonoBehaviour
                     bool ridden = p.ridesRidden.Contains(current);
                     bool matchesAge = p.adults == current.parent.adultRide;
                     
+                    // TODO factor line length into this
                     float demand = current.parent.demand * (ridden ? 1f : 0.75f) * (matchesAge ? 1f : 0.5f) * UnityEngine.Random.Range(0f, 1f);
                     float currentDemand = highestDemandSoFar?.parent?.demand ?? 0f;
 
@@ -130,6 +133,7 @@ public class GameplayManager : MonoBehaviour
                 // for highest rated ride
                 bool highRidden = p.ridesRidden.Contains(highestDemandSoFar);
                 bool highAge = p.adults == highestDemandSoFar.parent.adultRide;
+
                 if ((highRidden && !highAge) || !unriddenRide)
                 {
                     // reset rides to keep usage random ish

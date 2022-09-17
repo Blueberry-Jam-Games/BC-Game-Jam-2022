@@ -6,7 +6,7 @@ using UnityEngine;
 public class WaterSlides : ScriptableObject
 {
     public int maxStaff;
-    public int[] staffVsCapacity;
+    public float[] staffVsCapacity;
     public float damageThreshold;
     public float waterDraw;
     public float demand;

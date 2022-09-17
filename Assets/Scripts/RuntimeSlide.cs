@@ -10,7 +10,7 @@ public class RuntimeSlide : MonoBehaviour
 
     public WaterSlides parent;
     public int currentStaff;
-    public int capacityThisTick;
+    public float capacityThisTick;
 
     // list staff
     void Start()
