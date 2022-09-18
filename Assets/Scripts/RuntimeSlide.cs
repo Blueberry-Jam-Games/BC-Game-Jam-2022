@@ -13,7 +13,6 @@ public class RuntimeSlide : MonoBehaviour
     public float capacityThisTick;
 
     public bool closingSoon = false;
-
     public bool closed = false;
 
     public int lanes;
@@ -25,9 +24,11 @@ public class RuntimeSlide : MonoBehaviour
     public List<float> laneDamage = new List<float>();
 
     public bool brokenDown = false;
+    private float effectiveDamageThreshold = 100f;
 
     private void Start()
     {
+        effectiveDamageThreshold = parent.damageThreshold * UnityEngine.Random.Range(0.125f, 1f);
         for(int i = 0, count = lanesOpen.Count; i < count; i++)
         {
             laneDamage.Add(0);
@@ -36,14 +37,14 @@ public class RuntimeSlide : MonoBehaviour
 
     public void NotifyRidership(int people)
     {
-        float damage = (people * parent.damageMultiplier) / (float)OpenLanes();
+        float damage = (people * parent.damageMultiplier) / (float)CountOpenLanes();
         for (int i = 0; i < lanesOpen.Count; i++)
         {
             if(lanesOpen[i])
             {
                 laneDamage[i] += damage * UnityEngine.Random.Range(0f, 1f);
 
-                if (laneDamage[i] >= parent.damageThreshold)
+                if (laneDamage[i] >= effectiveDamageThreshold)
                 {
                     Breakdown();
                 }
@@ -63,6 +64,13 @@ public class RuntimeSlide : MonoBehaviour
             Person ps = lineup.Dequeue();
             ps.inLine = false;
         }
+
+        for(int i = 0; i < lanesOpen.Count; i++)
+        {
+            lanesOpen[i] = false;
+        }
+
+        Debug.Log("Lineup cleared");
     }
 
     private void Update()
@@ -70,23 +78,27 @@ public class RuntimeSlide : MonoBehaviour
         bool fullRepair = true;
         for (int i = 0, count = lanesOpen.Count; i < count; i++)
         {
-            if (!lanesOpen[i] && currentStaff > OpenLanes())
+            if (!lanesOpen[i] && currentStaff > CountOpenLanes())
             {
-                laneDamage[i] -= parent.damageMultiplier * (currentStaff - OpenLanes());
+                laneDamage[i] -= parent.damageMultiplier * (currentStaff - CountOpenLanes()) * parent.repairMultiplier;
+                //Debug.Log($"Lane damage {laneDamage[i]}, full repair {fullRepair}");
                 if(laneDamage[i] <= 0f)
                 {
                     laneDamage[i] = 0f;
                 }
                 else
                 {
+                    //Debug.Log("Lane damaged, leaving full repair false");
                     fullRepair = false;
                 }
             }
         }
 
+        //Debug.Log($"Repair check, broken down {brokenDown}, repair {fullRepair}");
         if (brokenDown && fullRepair)
         {
             brokenDown = false;
+            effectiveDamageThreshold = parent.damageThreshold * UnityEngine.Random.Range(0.125f, 1f);
         }
     }
 
@@ -95,7 +107,7 @@ public class RuntimeSlide : MonoBehaviour
         closingSoon = true;
     }
 
-    private int OpenLanes()
+    private int CountOpenLanes()
     {
         int laneCount = 0;
         foreach(bool b in lanesOpen)
@@ -110,7 +122,7 @@ public class RuntimeSlide : MonoBehaviour
 
     public void openRide()
     {
-        int laneCount = OpenLanes();
+        int laneCount = CountOpenLanes();
         if (!brokenDown)
         {
             if(currentStaff >= laneCount)
@@ -121,7 +133,7 @@ public class RuntimeSlide : MonoBehaviour
                     closingSoon = false;
                 }
             }
-        }   
+        }
     }
 
     public void closeLane(int slide)

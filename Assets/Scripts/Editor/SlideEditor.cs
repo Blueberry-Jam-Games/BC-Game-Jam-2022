@@ -22,12 +22,12 @@ public class RuntimeSlideInspector : Editor
             slide.removeStaff();
         }
 
-        if (GUILayout.Button("Close SLide"))
+        if (GUILayout.Button("Close Slide"))
         {
             slide.closeRide();
         }
 
-        if (GUILayout.Button("Open SLide"))
+        if (GUILayout.Button("Open Slide"))
         {
             slide.openRide();
         }

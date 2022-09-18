@@ -24,7 +24,7 @@ public class GameplayManager : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("Start");
+        //Debug.Log("Start");
         currentTime = new DateTime(2022, 08, 01, 7, 0, 0);
         GameObject[] slides = GameObject.FindGameObjectsWithTag("WaterSlide");
         foreach(GameObject go in slides)
@@ -91,7 +91,7 @@ public class GameplayManager : MonoBehaviour
 
     public void ProcessLineups()
     {
-        Debug.Log("Lineup processing");
+        //Debug.Log("Lineup processing");
         // Process each water slide removing people from the queues
         foreach(RuntimeSlide rs in allSlides)
         {
@@ -99,7 +99,7 @@ public class GameplayManager : MonoBehaviour
             {
                 rs.capacityThisTick += rs.getCapacity();
             }
-            Debug.Log($"Slide {rs.name}: Capacity this tick {rs.capacityThisTick}, lineup length {rs.lineup.Count}");
+            //Debug.Log($"Slide {rs.name}: Capacity this tick {rs.capacityThisTick}, lineup length {rs.lineup.Count}");
 
             while(rs.lineup.Count > 0 && rs.capacityThisTick > rs.lineup.Peek().partySize)
             {

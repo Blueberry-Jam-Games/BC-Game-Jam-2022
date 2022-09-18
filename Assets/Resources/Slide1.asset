@@ -19,6 +19,7 @@ MonoBehaviour:
   - 0.023
   damageThreshold: 150
   damageMultiplier: 0.025
+  repairMultiplier: 0.015
   waterDraw: 0
   demand: 5
   adultRide: 1
