@@ -292,7 +292,7 @@ public class GameplayManager : MonoBehaviour
 
     public float GetHourF()
     {
-        return (float) GetHour() + (60f / (float) GetMinute());
+        return (float) GetHour() + ((float) GetMinute() / 60f);
     }
 
     #endregion

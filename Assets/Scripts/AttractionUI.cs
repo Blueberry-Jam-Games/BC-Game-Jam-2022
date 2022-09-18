@@ -18,6 +18,8 @@ public class AttractionUI : MonoBehaviour
     public Toggle toggle1;
     public Toggle toggle2;
     public Toggle toggle3;
+
+    public Toggle openToggle;
     
 
     // Start is called before the first frame update
@@ -32,6 +34,7 @@ public class AttractionUI : MonoBehaviour
         toggle1.onValueChanged.AddListener(openLine1);
         toggle2.onValueChanged.AddListener(openLine2);
         toggle3.onValueChanged.AddListener(openLine3);
+        openToggle.onValueChanged.AddListener(openRide);
     }
 
     // Update is called once per frame
@@ -95,6 +98,18 @@ public class AttractionUI : MonoBehaviour
         } else 
         {
             ride.closeLane(2);
+        }
+    }
+
+    void openRide(bool open)
+    {
+        Debug.Log("ChangeClose");
+        if (open)
+        {
+            ride.openRide();
+        } else
+        {
+            ride.closeRide();
         }
     }
 }

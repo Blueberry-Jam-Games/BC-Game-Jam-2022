@@ -22,9 +22,9 @@ public class SunVisual : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        time = (gm.GetHourF()%24) * 10;
+        time = gm.GetHourF() * 10f;
 
-       sunRotation.transform.rotation = Quaternion.Euler(time * 1.5f - 180, 60f, 0f);
+        sunRotation.transform.rotation = Quaternion.Euler(time * 1.5f - 180, 60f, 0f);
         float temp = ((-14) * time * time) / 9;
         temp += (1120 * time) / 3;
         temp -= 14800;
