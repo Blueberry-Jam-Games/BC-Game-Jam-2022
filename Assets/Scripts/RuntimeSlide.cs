@@ -6,6 +6,8 @@ public class RuntimeSlide : MonoBehaviour
 {
     public GameplayManager gm;
 
+    public string slideName;
+
     public Queue<Person> lineup = new Queue<Person>();
 
     public WaterSlides parent;
@@ -28,6 +30,7 @@ public class RuntimeSlide : MonoBehaviour
 
     private void Start()
     {
+        gm = GameObject.FindWithTag("GameController").GetComponent<GameplayManager>();
         effectiveDamageThreshold = parent.damageThreshold * UnityEngine.Random.Range(0.125f, 1f);
         for(int i = 0, count = lanesOpen.Count; i < count; i++)
         {
