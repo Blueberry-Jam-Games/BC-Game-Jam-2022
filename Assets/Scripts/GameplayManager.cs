@@ -18,6 +18,10 @@ public class GameplayManager : MonoBehaviour
 
     private List<RuntimeSlide> allSlides = new List<RuntimeSlide>();
 
+    public float totalWater = 1000;
+
+    public float availableWater = 0;
+
     List<Person> tagRemoval = new List<Person>();
 
     public int staffAvailable = 9;
@@ -42,6 +46,7 @@ public class GameplayManager : MonoBehaviour
     {
         UpdateTime();
         FlagTimedOut();
+        setWaterUsage();
         closeRide();
         ProcessLineups();
     }
@@ -139,9 +144,42 @@ public class GameplayManager : MonoBehaviour
                         RuntimeSlide current = allSlides[i];
                         bool ridden = p.ridesRidden.Contains(current);
                         bool matchesAge = p.adults == current.parent.adultRide;
-                        
+                        float foodImpact = 1;
+
+                        if(current.parent.isFood && !p.hadLunch)
+                        {
+                            if(GetHour() <= 10)
+                            {
+                                foodImpact = 1;
+                            }
+                            else if(GetHour() <= 12)
+                            {
+                                foodImpact = (GetHour() - 10) + 0.5f;
+                            }
+                            else if(GetHour() <= 14)
+                            {
+                                foodImpact = 2.5f - (GetHour() - 12);
+                            }
+                            else if(GetHour() <= 16)
+                            {
+                                foodImpact = 0.75f;
+                            }
+                            else if(GetHour() <= 18)
+                            {
+                                foodImpact = 1f;
+                            }
+                            else
+                            {
+                                foodImpact = 2f;
+                            }
+                        }
+                        else
+                        {
+                            foodImpact = 0.25f;
+                        }
+
                         // TODO factor line length into this
-                        float demand = current.parent.demand * (ridden ? 1f : 0.75f) * (matchesAge ? 1f : 0.5f) * UnityEngine.Random.Range(0f, 1f);
+                        float demand = current.parent.demand * (ridden ? 1f : 0.75f) * (matchesAge ? 1f : 0.5f) * UnityEngine.Random.Range(0.2f, 1f) * foodImpact;
 
                         if(!ridden)
                         {
@@ -168,7 +206,24 @@ public class GameplayManager : MonoBehaviour
                     }
                     highestDemandSoFar.lineup.Enqueue(p);
                     p.inLine = true;
+                    if(highestDemandSoFar.parent.isFood)
+                    {
+                        p.hadLunch = true;
+                    }
                 }
+            }
+        }
+    }
+
+    public void setWaterUsage()
+    {
+        availableWater = totalWater;
+
+        foreach(RuntimeSlide rs in allSlides)
+        {
+            if(!rs.closed)
+            {
+                availableWater -= rs.parent.waterDraw;
             }
         }
     }
@@ -196,6 +251,12 @@ public class GameplayManager : MonoBehaviour
     {
         return currentTime.Day;
     }
+
+    public float GetHourF()
+    {
+        return (float) GetHour() + (60f / (float) GetMinute());
+    }
+
     #endregion
 }
 

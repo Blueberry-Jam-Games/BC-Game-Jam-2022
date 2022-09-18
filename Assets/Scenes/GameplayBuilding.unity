@@ -444,6 +444,8 @@ MonoBehaviour:
     adultProbability: 0
     preLunch: 1
   allPeople: []
+  totalWater: 0
+  availableWater: 0
   staffAvailable: 9
 --- !u!4 &225680631
 Transform:

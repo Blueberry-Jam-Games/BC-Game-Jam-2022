@@ -110,11 +110,14 @@ public class RuntimeSlide : MonoBehaviour
     private int CountOpenLanes()
     {
         int laneCount = 0;
-        foreach(bool b in lanesOpen)
-        {
-            if(b)
+
+
+            foreach(bool b in lanesOpen)
             {
-                laneCount += 1;
+                if(b)
+                {
+                    laneCount += 1;
+                }
             }
         }
         return laneCount;
@@ -125,7 +128,7 @@ public class RuntimeSlide : MonoBehaviour
         int laneCount = CountOpenLanes();
         if (!brokenDown)
         {
-            if(currentStaff >= laneCount)
+            if(currentStaff >= laneCount && parent.waterDraw * laneCount < gm.availableWater)
             {
                 if(currentStaff > 0)
                 {
@@ -144,6 +147,23 @@ public class RuntimeSlide : MonoBehaviour
             {
                 lanesOpen[slide] = false;
             }
+        }
+    }
+
+    public void openLane(int slide)
+    {
+        int laneCount = 0;
+        foreach(bool b in lanesOpen)
+            {
+            if(b)
+            {
+                laneCount += 1;
+            }
+        }
+
+        if(gm.availableWater - parent.waterDraw >= 0 && currentStaff > laneCount)
+        {
+            lanesOpen[slide] = true;
         }
     }
 
@@ -214,6 +234,7 @@ public class RuntimeSlide : MonoBehaviour
             if(currentStaff > 0)
             {
                 currentStaff -= 1;
+                gm.staffAvailable += 1;
             }
         }
         else
