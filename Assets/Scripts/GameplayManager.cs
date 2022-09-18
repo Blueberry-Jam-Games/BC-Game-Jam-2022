@@ -77,6 +77,16 @@ public class GameplayManager : MonoBehaviour
             }
         }
     }
+
+    public int GetTotalPeople()
+    {
+        int counter = 0;
+        foreach(Person p in allPeople) 
+        {
+            counter += p.partySize;
+        }
+        return counter;
+    }
     
     private void FlagTimedOut()
     {
@@ -256,9 +266,13 @@ public class GameplayManager : MonoBehaviour
     private void UpdateTime()
     {
         currentTime = currentTime.AddSeconds(Time.deltaTime * timeMultiplier);
-        string time = currentTime.ToString("HH:mm");
         //Debug.Log($"Time is {time}, days are {currentTime.Day}");
         //Debug.Log($"Formatted time is {GetHour()}:{GetMinute()} on day {GetDay()}");
+    }
+
+    public string GetTime()
+    {
+        return currentTime.ToString("HH:mm");
     }
 
     public int GetHour()
