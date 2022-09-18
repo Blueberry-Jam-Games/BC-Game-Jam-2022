@@ -20,6 +20,8 @@ public class GameplayManager : MonoBehaviour
 
     List<Person> tagRemoval = new List<Person>();
 
+    public int staffAvailable = 9;
+
     void Start()
     {
         Debug.Log("Start");
@@ -74,19 +76,35 @@ public class GameplayManager : MonoBehaviour
         }
     }
 
+    public void closeRide()
+    {
+        foreach(RuntimeSlide rs in allSlides)
+        {
+            if(rs.closingSoon && rs.queueCleared())
+            {
+                rs.closed = true;
+                rs.closingSoon = false;
+            }
+        }
+    }
+
     public void ProcessLineups()
     {
         Debug.Log("Lineup processing");
         // Process each water slide removing people from the queues
         foreach(RuntimeSlide rs in allSlides)
         {
-            rs.capacityThisTick += rs.parent.staffVsCapacity[rs.currentStaff];
+            if(rs.lineup.Count > 1)
+            {
+                rs.capacityThisTick += rs.getCapacity();
+            }
             Debug.Log($"Slide {rs.name}: Capacity this tick {rs.capacityThisTick}, lineup length {rs.lineup.Count}");
 
             while(rs.lineup.Count > 0 && rs.capacityThisTick > rs.lineup.Peek().partySize)
             {
                 Person serverd = rs.lineup.Dequeue();
                 serverd.inLine = false;
+                rs.capacityThisTick -= serverd.partySize;
                 if (!serverd.ridesRidden.Contains(rs))
                 {
                     serverd.ridesRidden.Add(rs);
@@ -112,35 +130,41 @@ public class GameplayManager : MonoBehaviour
                 bool unriddenRide = false;
                 for(int i = 0, count = allSlides.Count; i < count; i++)
                 {
-                    RuntimeSlide current = allSlides[i];
-                    bool ridden = p.ridesRidden.Contains(current);
-                    bool matchesAge = p.adults == current.parent.adultRide;
-                    
-                    // TODO factor line length into this
-                    float demand = current.parent.demand * (ridden ? 1f : 0.75f) * (matchesAge ? 1f : 0.5f) * UnityEngine.Random.Range(0f, 1f);
-                    float currentDemand = highestDemandSoFar?.parent?.demand ?? 0f;
-
-                    if(!ridden)
+                    if(!allSlides[i].closingSoon && !allSlides[i].closed) // Closing soon check on ride
                     {
-                        unriddenRide = true;
-                    }
+                        RuntimeSlide current = allSlides[i];
+                        bool ridden = p.ridesRidden.Contains(current);
+                        bool matchesAge = p.adults == current.parent.adultRide;
+                        
+                        // TODO factor line length into this
+                        float demand = current.parent.demand * (ridden ? 1f : 0.75f) * (matchesAge ? 1f : 0.5f) * UnityEngine.Random.Range(0f, 1f);
+                        float currentDemand = highestDemandSoFar?.parent?.demand ?? 0f;
 
-                    if (demand > currentDemand)
-                    {
-                        highestDemandSoFar = current;
+                        if(!ridden)
+                        {
+                            unriddenRide = true;
+                        }
+
+                        if (demand > currentDemand)
+                        {
+                            highestDemandSoFar = current;
+                        }
                     }
                 }
                 // for highest rated ride
-                bool highRidden = p.ridesRidden.Contains(highestDemandSoFar);
-                bool highAge = p.adults == highestDemandSoFar.parent.adultRide;
-
-                if ((highRidden && !highAge) || !unriddenRide)
+                if(highestDemandSoFar != null)
                 {
-                    // reset rides to keep usage random ish
-                    p.ridesRidden.Clear();
+                    bool highRidden = p.ridesRidden.Contains(highestDemandSoFar);
+                    bool highAge = p.adults == highestDemandSoFar.parent.adultRide;
+
+                    if ((highRidden && !highAge) || !unriddenRide)
+                    {
+                        // reset rides to keep usage random ish
+                        p.ridesRidden.Clear();
+                    }
+                    highestDemandSoFar.lineup.Enqueue(p);
+                    p.inLine = true;
                 }
-                highestDemandSoFar.lineup.Enqueue(p);
-                p.inLine = true;
             }
         }
     }
