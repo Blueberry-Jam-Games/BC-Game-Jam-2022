@@ -250,6 +250,12 @@ public class GameplayManager : MonoBehaviour
     {
         return currentTime.Day;
     }
+
+    public float GetHourF()
+    {
+        return (float) GetHour() + (60f / (float) GetMinute());
+    }
+
     #endregion
 }
 
