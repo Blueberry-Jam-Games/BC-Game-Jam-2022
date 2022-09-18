@@ -444,7 +444,7 @@ MonoBehaviour:
     adultProbability: 0
     preLunch: 1
   allPeople: []
-  totalWater: 0
+  totalWater: 1000
   availableWater: 0
   staffAvailable: 9
 --- !u!4 &225680631
@@ -496,9 +496,9 @@ MonoBehaviour:
   currentStaff: 3
   capacityThisTick: 0
   closingSoon: 0
-  closed: 0
+  closed: 1
   lanes: 3
-  lanesOpen: 010000
+  lanesOpen: 000000
   laneDamage: []
   brokenDown: 0
 --- !u!4 &800972821
