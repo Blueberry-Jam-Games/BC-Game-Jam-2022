@@ -221,9 +221,9 @@ public class RuntimeSlide : MonoBehaviour
         int a = 0;
         while(tempCurrentStaff > 0)
         {
-            if(lanesOpen[a%3])
+            if(lanesOpen[a % lanes])
             {
-                staffAssignment[a%3] += 1;
+                staffAssignment[a % lanes] += 1;
                 tempCurrentStaff -= 1;
             }
 

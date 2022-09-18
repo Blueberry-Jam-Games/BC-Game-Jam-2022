@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 827591091047322323}
   m_Layer: 0
   m_Name: Slide
-  m_TagString: Untagged
+  m_TagString: WaterSlide
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -442,6 +442,26 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1434354476122641511, guid: 2fb014335a86a4c918f1917952f83e1a,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1434354476122641511, guid: 2fb014335a86a4c918f1917952f83e1a,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1434354476122641511, guid: 2fb014335a86a4c918f1917952f83e1a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1434354476122641511, guid: 2fb014335a86a4c918f1917952f83e1a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1750290926558424648, guid: 2fb014335a86a4c918f1917952f83e1a,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -621,6 +641,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3759110880372793006, guid: 2fb014335a86a4c918f1917952f83e1a,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3759110880372793006, guid: 2fb014335a86a4c918f1917952f83e1a,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3759110880372793006, guid: 2fb014335a86a4c918f1917952f83e1a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3759110880372793006, guid: 2fb014335a86a4c918f1917952f83e1a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3817427266049869898, guid: 2fb014335a86a4c918f1917952f83e1a,
         type: 3}
