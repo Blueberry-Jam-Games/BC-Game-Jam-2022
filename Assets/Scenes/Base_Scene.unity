@@ -1119,6 +1119,16 @@ PrefabInstance:
       propertyPath: ride
       value: 
       objectReference: {fileID: 138025448}
+    - target: {fileID: 3776623966077501369, guid: 1c19c3df4de694908ad7263c8a2fafac,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -365
+      objectReference: {fileID: 0}
+    - target: {fileID: 3776623966077501369, guid: 1c19c3df4de694908ad7263c8a2fafac,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -227
+      objectReference: {fileID: 0}
     - target: {fileID: 4001654180590461893, guid: 1c19c3df4de694908ad7263c8a2fafac,
         type: 3}
       propertyPath: m_AnchorMax.y
