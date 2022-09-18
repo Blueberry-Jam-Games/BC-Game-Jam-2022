@@ -11,6 +11,10 @@ public class Person
     public bool hadLunch; // true if past lunch time on creation
     public int partySize;
     public bool inLine;
+
+    public float previousDemand;
+
+    public float timeInLine;
     public DateTime startTime;
     public HashSet<RuntimeSlide> ridesRidden;
 
@@ -23,5 +27,6 @@ public class Person
         this.partySize = partySize;
         inLine = false;
         ridesRidden = new HashSet<RuntimeSlide>();
+        timeInLine = 0;
     }
 }

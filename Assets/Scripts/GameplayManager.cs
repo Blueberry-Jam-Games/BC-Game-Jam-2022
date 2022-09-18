@@ -26,6 +26,8 @@ public class GameplayManager : MonoBehaviour
 
     public int staffAvailable = 9;
 
+    public float avgHappieness;
+
     void Start()
     {
         //Debug.Log("Start");
@@ -40,6 +42,13 @@ public class GameplayManager : MonoBehaviour
     private void FixedUpdate()
     {
         CreateNewPeople();
+        foreach (Person p in allPeople)
+        {
+            if(p.inLine)
+            {
+                p.timeInLine += 0.012f;
+            }
+        }
     }
 
     void Update()
@@ -134,6 +143,8 @@ public class GameplayManager : MonoBehaviour
                 RuntimeSlide highestDemandSoFar = null;
                 bool unriddenRide = false;
 
+                updateHappieness(p.timeInLine, p.previousDemand);
+
                 float previousDemand = 0;
                 for(int i = 0, count = allSlides.Count; i < count; i++)
                 {
@@ -204,12 +215,27 @@ public class GameplayManager : MonoBehaviour
                     }
                     highestDemandSoFar.lineup.Enqueue(p);
                     p.inLine = true;
+                    p.timeInLine = 0;
+                    p.previousDemand = highestDemandSoFar.parent.demand;
                     if(highestDemandSoFar.parent.isFood)
                     {
                         p.hadLunch = true;
                     }
                 }
             }
+        }
+    }
+
+    public void updateHappieness(float timeInLine, float demand)
+    {
+        if(avgHappieness == 0)
+        {
+            avgHappieness = (demand / (timeInLine / 10));
+        }
+        else
+        {
+            avgHappieness *= 0.95f;
+            avgHappieness += (demand / (timeInLine / 10)) * 0.05f;
         }
     }
 
