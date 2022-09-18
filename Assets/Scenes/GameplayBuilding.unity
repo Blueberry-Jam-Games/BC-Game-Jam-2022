@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -152,10 +152,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 002318018b100914e85905fb82fdba4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gm: {fileID: 225680630}
   damage: 0
   parent: {fileID: 11400000, guid: c3d91147da34c3e488c0c4dfcd36ce80, type: 2}
-  currentStaff: 0
+  currentStaff: 1
   capacityThisTick: 0
+  closingSoon: 0
+  closed: 0
+  lanes: 3
+  lanesOpen: 010101
 --- !u!4 &181754547
 Transform:
   m_ObjectHideFlags: 0
@@ -438,6 +443,7 @@ MonoBehaviour:
     adultProbability: 0
     preLunch: 1
   allPeople: []
+  staffAvailable: 9
 --- !u!4 &225680631
 Transform:
   m_ObjectHideFlags: 0
@@ -482,10 +488,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 002318018b100914e85905fb82fdba4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gm: {fileID: 225680630}
   damage: 0
-  parent: {fileID: 11400000, guid: 74a69cd5be8c4aa439da8c08ba8434b1, type: 2}
-  currentStaff: 0
+  parent: {fileID: 11400000, guid: c3d91147da34c3e488c0c4dfcd36ce80, type: 2}
+  currentStaff: 1
   capacityThisTick: 0
+  closingSoon: 0
+  closed: 0
+  lanes: 3
+  lanesOpen: 010000
 --- !u!4 &800972821
 Transform:
   m_ObjectHideFlags: 0
