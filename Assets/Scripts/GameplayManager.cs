@@ -14,9 +14,13 @@ public class GameplayManager : MonoBehaviour
     [Header("Tuning")]
     public List<HourTuning> hours = new List<HourTuning>(24);
 
-    public List<Person> allPeople = new List<Person>(1000);
+    public LinkedList<Person> allPeople = new LinkedList<Person>();
 
     private List<RuntimeSlide> allSlides = new List<RuntimeSlide>();
+
+    public float totalWater = 1000;
+
+    public float availableWater = 0;
 
     List<Person> tagRemoval = new List<Person>();
 
@@ -24,7 +28,7 @@ public class GameplayManager : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("Start");
+        //Debug.Log("Start");
         currentTime = new DateTime(2022, 08, 01, 7, 0, 0);
         GameObject[] slides = GameObject.FindGameObjectsWithTag("WaterSlide");
         foreach(GameObject go in slides)
@@ -42,6 +46,8 @@ public class GameplayManager : MonoBehaviour
     {
         UpdateTime();
         FlagTimedOut();
+        setWaterUsage();
+        closeRide();
         ProcessLineups();
     }
 
@@ -57,7 +63,7 @@ public class GameplayManager : MonoBehaviour
         {
             if (UnityEngine.Random.Range(0, 100) < 9)
             {
-                allPeople.Add(new Person(UnityEngine.Random.Range(0, 100) < ht.adultProbability, UnityEngine.Random.Range(ht.minDurration, ht.maxDurration),
+                allPeople.AddLast(new Person(UnityEngine.Random.Range(0, 100) < ht.adultProbability, UnityEngine.Random.Range(ht.minDurration, ht.maxDurration),
                     ht.preLunch, UnityEngine.Random.Range(1, 6), currentTime));
             }
         }
@@ -65,9 +71,8 @@ public class GameplayManager : MonoBehaviour
     
     private void FlagTimedOut()
     {
-        for (int i = 0, count = allPeople.Count; i < count; i++)
+        foreach (Person current in allPeople)
         {
-            Person current = allPeople[i];
             TimeSpan length = currentTime.Subtract(current.startTime);
             if (length.TotalMinutes > current.totalTime)
             {
@@ -90,24 +95,25 @@ public class GameplayManager : MonoBehaviour
 
     public void ProcessLineups()
     {
-        Debug.Log("Lineup processing");
+        //Debug.Log("Lineup processing");
         // Process each water slide removing people from the queues
         foreach(RuntimeSlide rs in allSlides)
         {
-            if(rs.lineup.Count > 1)
+            if(rs.lineup.Count > 0)
             {
                 rs.capacityThisTick += rs.getCapacity();
             }
-            Debug.Log($"Slide {rs.name}: Capacity this tick {rs.capacityThisTick}, lineup length {rs.lineup.Count}");
+            //Debug.Log($"Slide {rs.name}: Capacity this tick {rs.capacityThisTick}, lineup length {rs.lineup.Count}");
 
             while(rs.lineup.Count > 0 && rs.capacityThisTick > rs.lineup.Peek().partySize)
             {
-                Person serverd = rs.lineup.Dequeue();
-                serverd.inLine = false;
-                rs.capacityThisTick -= serverd.partySize;
-                if (!serverd.ridesRidden.Contains(rs))
+                Person served = rs.lineup.Dequeue();
+                served.inLine = false;
+                rs.capacityThisTick -= served.partySize;
+                rs.NotifyRidership(served.partySize);
+                if (!served.ridesRidden.Contains(rs))
                 {
-                    serverd.ridesRidden.Add(rs);
+                    served.ridesRidden.Add(rs);
                 }
             }
         }
@@ -121,13 +127,14 @@ public class GameplayManager : MonoBehaviour
         }
         tagRemoval.Clear();
         // for each person not in a queue, add them to one (this is the hard part)
-        for(int t = 0, cnt = allPeople.Count; t < cnt; t++)
+        foreach (Person p in allPeople)
         {
-            Person p = allPeople[t];
             if(!p.inLine)
             {
                 RuntimeSlide highestDemandSoFar = null;
                 bool unriddenRide = false;
+
+                float previousDemand = 0;
                 for(int i = 0, count = allSlides.Count; i < count; i++)
                 {
                     if(!allSlides[i].closingSoon && !allSlides[i].closed) // Closing soon check on ride
@@ -135,19 +142,52 @@ public class GameplayManager : MonoBehaviour
                         RuntimeSlide current = allSlides[i];
                         bool ridden = p.ridesRidden.Contains(current);
                         bool matchesAge = p.adults == current.parent.adultRide;
-                        
+                        float foodImpact = 1;
+
+                        if(current.parent.isFood && !p.hadLunch)
+                        {
+                            if(GetHour() <= 10)
+                            {
+                                foodImpact = 1;
+                            }
+                            else if(GetHour() <= 12)
+                            {
+                                foodImpact = (GetHour() - 10) + 0.5f;
+                            }
+                            else if(GetHour() <= 14)
+                            {
+                                foodImpact = 2.5f - (GetHour() - 12);
+                            }
+                            else if(GetHour() <= 16)
+                            {
+                                foodImpact = 0.75f;
+                            }
+                            else if(GetHour() <= 18)
+                            {
+                                foodImpact = 1f;
+                            }
+                            else
+                            {
+                                foodImpact = 2f;
+                            }
+                        }
+                        else
+                        {
+                            foodImpact = 0.25f;
+                        }
+
                         // TODO factor line length into this
-                        float demand = current.parent.demand * (ridden ? 1f : 0.75f) * (matchesAge ? 1f : 0.5f) * UnityEngine.Random.Range(0f, 1f);
-                        float currentDemand = highestDemandSoFar?.parent?.demand ?? 0f;
+                        float demand = current.parent.demand * (ridden ? 1f : 0.75f) * (matchesAge ? 1f : 0.5f) * UnityEngine.Random.Range(0.2f, 1f) * foodImpact;
 
                         if(!ridden)
                         {
                             unriddenRide = true;
                         }
 
-                        if (demand > currentDemand)
+                        if (demand > previousDemand)
                         {
                             highestDemandSoFar = current;
+                            previousDemand = demand;
                         }
                     }
                 }
@@ -164,7 +204,24 @@ public class GameplayManager : MonoBehaviour
                     }
                     highestDemandSoFar.lineup.Enqueue(p);
                     p.inLine = true;
+                    if(highestDemandSoFar.parent.isFood)
+                    {
+                        p.hadLunch = true;
+                    }
                 }
+            }
+        }
+    }
+
+    public void setWaterUsage()
+    {
+        availableWater = totalWater;
+
+        foreach(RuntimeSlide rs in allSlides)
+        {
+            if(!rs.closed)
+            {
+                availableWater -= rs.parent.waterDraw;
             }
         }
     }
@@ -192,6 +249,12 @@ public class GameplayManager : MonoBehaviour
     {
         return currentTime.Day;
     }
+
+    public float GetHourF()
+    {
+        return (float) GetHour() + (60f / (float) GetMinute());
+    }
+
     #endregion
 }
 

@@ -9,22 +9,20 @@ public class SunVisual : MonoBehaviour
     public Light moon;
     public GameObject moonRotation;
     
+    public GameplayManager gm;
+
     public float time = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        gm = FindObjectOfType<GameplayManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        time += 0.1f;
-        if (time > 240)
-        {
-            time -= 240;
-        }
+        time = (gm.GetHourF()%24) * 10;
 
        sunRotation.transform.rotation = Quaternion.Euler(time * 1.5f - 180, 60f, 0f);
         float temp = ((-14) * time * time) / 9;

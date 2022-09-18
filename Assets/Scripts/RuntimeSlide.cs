@@ -5,8 +5,7 @@ using UnityEngine;
 public class RuntimeSlide : MonoBehaviour
 {
     public GameplayManager gm;
-    public float damage;
-    // list people lineup
+
     public Queue<Person> lineup = new Queue<Person>();
 
     public WaterSlides parent;
@@ -14,28 +13,129 @@ public class RuntimeSlide : MonoBehaviour
     public float capacityThisTick;
 
     public bool closingSoon = false;
-
     public bool closed = false;
 
     public int lanes;
 
     [SerializeField]
     public List<bool> lanesOpen = new List<bool>();
+    
+    [SerializeField]
+    public List<float> laneDamage = new List<float>();
 
-    // list staff
-    void Start()
+    public bool brokenDown = false;
+    private float effectiveDamageThreshold = 100f;
+
+    private void Start()
     {
-        
+        effectiveDamageThreshold = parent.damageThreshold * UnityEngine.Random.Range(0.125f, 1f);
+        for(int i = 0, count = lanesOpen.Count; i < count; i++)
+        {
+            laneDamage.Add(0);
+        }
     }
 
-    void Update()
+    public void NotifyRidership(int people)
     {
-        
+        float damage = (people * parent.damageMultiplier) / (float)CountOpenLanes();
+        for (int i = 0; i < lanesOpen.Count; i++)
+        {
+            if(lanesOpen[i])
+            {
+                laneDamage[i] += damage * UnityEngine.Random.Range(0f, 1f);
+
+                if (laneDamage[i] >= effectiveDamageThreshold)
+                {
+                    Breakdown();
+                }
+            }
+        }
+    }
+
+    public void Breakdown()
+    {
+        Debug.Log($"Ride {name} has broken down");
+        brokenDown = true;
+        closed = true;
+        capacityThisTick = 0f;
+
+        while (lineup.Count > 0)
+        {
+            Person ps = lineup.Dequeue();
+            ps.inLine = false;
+        }
+
+        for(int i = 0; i < lanesOpen.Count; i++)
+        {
+            lanesOpen[i] = false;
+        }
+
+        Debug.Log("Lineup cleared");
+    }
+
+    private void Update()
+    {
+        bool fullRepair = true;
+        for (int i = 0, count = lanesOpen.Count; i < count; i++)
+        {
+            if (!lanesOpen[i] && currentStaff > CountOpenLanes())
+            {
+                laneDamage[i] -= parent.damageMultiplier * (currentStaff - CountOpenLanes()) * parent.repairMultiplier;
+                //Debug.Log($"Lane damage {laneDamage[i]}, full repair {fullRepair}");
+                if(laneDamage[i] <= 0f)
+                {
+                    laneDamage[i] = 0f;
+                }
+                else
+                {
+                    //Debug.Log("Lane damaged, leaving full repair false");
+                    fullRepair = false;
+                }
+            }
+        }
+
+        //Debug.Log($"Repair check, broken down {brokenDown}, repair {fullRepair}");
+        if (brokenDown && fullRepair)
+        {
+            brokenDown = false;
+            effectiveDamageThreshold = parent.damageThreshold * UnityEngine.Random.Range(0.125f, 1f);
+        }
     }
 
     public void closeRide()
     {
         closingSoon = true;
+    }
+
+    private int CountOpenLanes()
+    {
+        int laneCount = 0;
+
+
+        foreach(bool b in lanesOpen)
+        {
+            if(b)
+            {
+                laneCount += 1;
+            }
+        }
+        return laneCount;
+    }
+
+    public void openRide()
+    {
+        int laneCount = CountOpenLanes();
+        if (!brokenDown)
+        {
+            if(currentStaff >= laneCount && parent.waterDraw * laneCount < gm.availableWater && laneCount > 0)
+            {
+                if(currentStaff > 0)
+                {
+                    closed = false;
+                    closingSoon = false;
+                }
+            }
+        }
     }
 
     public void closeLane(int slide)
@@ -46,6 +146,16 @@ public class RuntimeSlide : MonoBehaviour
             {
                 lanesOpen[slide] = false;
             }
+        }
+    }
+
+    public void openLane(int slide)
+    {
+        int laneCount = CountOpenLanes();
+
+        if(gm.availableWater - parent.waterDraw >= 0 && currentStaff > laneCount)
+        {
+            lanesOpen[slide] = true;
         }
     }
 
@@ -67,16 +177,32 @@ public class RuntimeSlide : MonoBehaviour
 
         int[] staffAssignment = new int[lanes];
 
-        for(int i = 0; i < currentStaff; i++)
+        int tempCurrentStaff = currentStaff;
+
+        int a = 0;
+        while(tempCurrentStaff > 0)
         {
-            staffAssignment[i%lanes] += 1;
+            if(lanesOpen[a%3])
+            {
+                staffAssignment[a%3] += 1;
+                tempCurrentStaff -= 1;
+            }
+
+            a++;
         }
 
         for(int i = 0; i < lanes; i++)
         {
             if(lanesOpen[i])
             {
-                output += parent.staffVsCapacity[staffAssignment[i] - 1];
+                if(staffAssignment[i] < parent.staffVsCapacity.Length)
+                {
+                    output += parent.staffVsCapacity[staffAssignment[i] - 1];
+                }
+                else
+                {
+                    output += parent.staffVsCapacity[parent.staffVsCapacity.Length - 1];
+                }
             }
         }
 
@@ -85,7 +211,7 @@ public class RuntimeSlide : MonoBehaviour
 
     public void addStaff()
     {
-        if(currentStaff <= parent.maxStaff && gm.staffAvailable >= 1)
+        if(currentStaff < parent.maxStaff && gm.staffAvailable >= 1)
         {
             gm.staffAvailable -= 1;
             currentStaff += 1;
@@ -95,17 +221,22 @@ public class RuntimeSlide : MonoBehaviour
     public void removeStaff()
     {
         int laneCount = 0;
-        foreach(bool b in lanesOpen)
+        if(closed)
         {
-            if(b)
+            if(currentStaff > 0)
             {
-                laneCount += 1;
+                currentStaff -= 1;
+                gm.staffAvailable += 1;
             }
         }
-        if(currentStaff > laneCount)
+        else
         {
-            gm.staffAvailable += 1;
-            currentStaff -= 1;
+            laneCount = CountOpenLanes();
+            if(currentStaff > laneCount)
+            {
+                gm.staffAvailable += 1;
+                currentStaff -= 1;
+            }
         }
     }
 }
