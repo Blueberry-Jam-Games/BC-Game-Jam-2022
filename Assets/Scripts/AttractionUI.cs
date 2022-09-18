@@ -14,9 +14,9 @@ public class AttractionUI : MonoBehaviour
     public GameObject line1;
     public GameObject line2;
     public GameObject line3;
-    public Button button1;
-    public Button button2;
-    public Button button3;
+    public Toggle toggle1;
+    public Toggle toggle2;
+    public Toggle toggle3;
     
 
     // Start is called before the first frame update
