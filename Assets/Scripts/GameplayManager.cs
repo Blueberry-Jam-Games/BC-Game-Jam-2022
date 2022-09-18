@@ -14,7 +14,7 @@ public class GameplayManager : MonoBehaviour
     [Header("Tuning")]
     public List<HourTuning> hours = new List<HourTuning>(24);
 
-    public List<Person> allPeople = new List<Person>(1000);
+    public LinkedList<Person> allPeople = new LinkedList<Person>();
 
     private List<RuntimeSlide> allSlides = new List<RuntimeSlide>();
 
@@ -28,7 +28,7 @@ public class GameplayManager : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("Start");
+        //Debug.Log("Start");
         currentTime = new DateTime(2022, 08, 01, 7, 0, 0);
         GameObject[] slides = GameObject.FindGameObjectsWithTag("WaterSlide");
         foreach(GameObject go in slides)
@@ -63,7 +63,7 @@ public class GameplayManager : MonoBehaviour
         {
             if (UnityEngine.Random.Range(0, 100) < 9)
             {
-                allPeople.Add(new Person(UnityEngine.Random.Range(0, 100) < ht.adultProbability, UnityEngine.Random.Range(ht.minDurration, ht.maxDurration),
+                allPeople.AddLast(new Person(UnityEngine.Random.Range(0, 100) < ht.adultProbability, UnityEngine.Random.Range(ht.minDurration, ht.maxDurration),
                     ht.preLunch, UnityEngine.Random.Range(1, 6), currentTime));
             }
         }
@@ -71,9 +71,8 @@ public class GameplayManager : MonoBehaviour
     
     private void FlagTimedOut()
     {
-        for (int i = 0, count = allPeople.Count; i < count; i++)
+        foreach (Person current in allPeople)
         {
-            Person current = allPeople[i];
             TimeSpan length = currentTime.Subtract(current.startTime);
             if (length.TotalMinutes > current.totalTime)
             {
@@ -96,7 +95,7 @@ public class GameplayManager : MonoBehaviour
 
     public void ProcessLineups()
     {
-        Debug.Log("Lineup processing");
+        //Debug.Log("Lineup processing");
         // Process each water slide removing people from the queues
         foreach(RuntimeSlide rs in allSlides)
         {
@@ -104,16 +103,17 @@ public class GameplayManager : MonoBehaviour
             {
                 rs.capacityThisTick += rs.getCapacity();
             }
-            Debug.Log($"Slide {rs.name}: Capacity this tick {rs.capacityThisTick}, lineup length {rs.lineup.Count}");
+            //Debug.Log($"Slide {rs.name}: Capacity this tick {rs.capacityThisTick}, lineup length {rs.lineup.Count}");
 
             while(rs.lineup.Count > 0 && rs.capacityThisTick > rs.lineup.Peek().partySize)
             {
-                Person serverd = rs.lineup.Dequeue();
-                serverd.inLine = false;
-                rs.capacityThisTick -= serverd.partySize;
-                if (!serverd.ridesRidden.Contains(rs))
+                Person served = rs.lineup.Dequeue();
+                served.inLine = false;
+                rs.capacityThisTick -= served.partySize;
+                rs.NotifyRidership(served.partySize);
+                if (!served.ridesRidden.Contains(rs))
                 {
-                    serverd.ridesRidden.Add(rs);
+                    served.ridesRidden.Add(rs);
                 }
             }
         }
@@ -127,9 +127,8 @@ public class GameplayManager : MonoBehaviour
         }
         tagRemoval.Clear();
         // for each person not in a queue, add them to one (this is the hard part)
-        for(int t = 0, cnt = allPeople.Count; t < cnt; t++)
+        foreach (Person p in allPeople)
         {
-            Person p = allPeople[t];
             if(!p.inLine)
             {
                 RuntimeSlide highestDemandSoFar = null;

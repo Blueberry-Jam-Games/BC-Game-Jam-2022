@@ -8,6 +8,8 @@ public class WaterSlides : ScriptableObject
     public int maxStaff;
     public float[] staffVsCapacity;
     public float damageThreshold;
+    public float damageMultiplier;
+    public float repairMultiplier;
     public float waterDraw;
     public float demand;
     public bool adultRide;
