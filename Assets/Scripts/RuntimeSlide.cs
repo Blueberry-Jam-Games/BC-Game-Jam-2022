@@ -219,12 +219,23 @@ public class RuntimeSlide : MonoBehaviour
         int tempCurrentStaff = currentStaff;
 
         int a = 0;
+        int stopNow = 0;
         while(tempCurrentStaff > 0)
         {
             if(lanesOpen[a % lanes])
             {
                 staffAssignment[a % lanes] += 1;
                 tempCurrentStaff -= 1;
+                stopNow = 0;
+            }
+            else
+            {
+                stopNow += 1;
+            }
+
+            if(stopNow > 4)
+            {
+                break;
             }
 
             a++;
