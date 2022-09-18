@@ -58,9 +58,8 @@ public class WaterSlideSounds : MonoBehaviour
     private IEnumerator ActivityLoop()
     {
         Debug.Log("Activity loop start");
-
         inActivityLoop = true;
-        startActivity.Play();
+        startActivity.PlayDelayed(Random.Range(0f, 1f));
         int x = Random.Range(0, 10);
         if (x < randomOnStart.Length)
         {
@@ -81,7 +80,7 @@ public class WaterSlideSounds : MonoBehaviour
 
         isTransitioning = true;
         startActivity.Play();
-        ambientLoop.Play();
+        ambientLoop.PlayDelayed(Random.Range(0f, 1f));
         for (int i = 0; i < 30; i++)
         {
             if (closedSound != null)
