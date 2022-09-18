@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 [System.Serializable]
-public struct Person
+public class Person
 {
     public bool adults; // else kids
     public int totalTime; // in minutes

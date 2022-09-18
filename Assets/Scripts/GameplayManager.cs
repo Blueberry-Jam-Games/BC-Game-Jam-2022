@@ -42,6 +42,7 @@ public class GameplayManager : MonoBehaviour
     {
         UpdateTime();
         FlagTimedOut();
+        closeRide();
         ProcessLineups();
     }
 
@@ -94,7 +95,7 @@ public class GameplayManager : MonoBehaviour
         // Process each water slide removing people from the queues
         foreach(RuntimeSlide rs in allSlides)
         {
-            if(rs.lineup.Count > 1)
+            if(rs.lineup.Count > 0)
             {
                 rs.capacityThisTick += rs.getCapacity();
             }
@@ -128,6 +129,8 @@ public class GameplayManager : MonoBehaviour
             {
                 RuntimeSlide highestDemandSoFar = null;
                 bool unriddenRide = false;
+
+                float previousDemand = 0;
                 for(int i = 0, count = allSlides.Count; i < count; i++)
                 {
                     if(!allSlides[i].closingSoon && !allSlides[i].closed) // Closing soon check on ride
@@ -138,16 +141,16 @@ public class GameplayManager : MonoBehaviour
                         
                         // TODO factor line length into this
                         float demand = current.parent.demand * (ridden ? 1f : 0.75f) * (matchesAge ? 1f : 0.5f) * UnityEngine.Random.Range(0f, 1f);
-                        float currentDemand = highestDemandSoFar?.parent?.demand ?? 0f;
 
                         if(!ridden)
                         {
                             unriddenRide = true;
                         }
 
-                        if (demand > currentDemand)
+                        if (demand > previousDemand)
                         {
                             highestDemandSoFar = current;
+                            previousDemand = demand;
                         }
                     }
                 }

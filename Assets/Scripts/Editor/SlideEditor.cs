@@ -26,5 +26,10 @@ public class RuntimeSlideInspector : Editor
         {
             slide.closeRide();
         }
+
+        if (GUILayout.Button("Open SLide"))
+        {
+            slide.openRide();
+        }
     }
 }

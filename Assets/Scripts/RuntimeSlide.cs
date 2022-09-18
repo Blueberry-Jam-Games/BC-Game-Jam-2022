@@ -38,6 +38,26 @@ public class RuntimeSlide : MonoBehaviour
         closingSoon = true;
     }
 
+    public void openRide()
+    {
+        int laneCount = 0;
+        foreach(bool b in lanesOpen)
+        {
+            if(b)
+            {
+                laneCount += 1;
+            }
+        }
+        if(currentStaff >= laneCount)
+        {
+            if(currentStaff > 0)
+            {
+                closed = false;
+                closingSoon = false;
+            }
+        }        
+    }
+
     public void closeLane(int slide)
     {
         if(lanes > 1)
@@ -67,16 +87,32 @@ public class RuntimeSlide : MonoBehaviour
 
         int[] staffAssignment = new int[lanes];
 
-        for(int i = 0; i < currentStaff; i++)
+        int tempCurrentStaff = currentStaff;
+
+        int a = 0;
+        while(tempCurrentStaff > 0)
         {
-            staffAssignment[i%lanes] += 1;
+            if(lanesOpen[a%3])
+            {
+                staffAssignment[a%3] += 1;
+                tempCurrentStaff -= 1;
+            }
+
+            a++;
         }
 
         for(int i = 0; i < lanes; i++)
         {
             if(lanesOpen[i])
             {
-                output += parent.staffVsCapacity[staffAssignment[i] - 1];
+                if(staffAssignment[i] < parent.staffVsCapacity.Length)
+                {
+                    output += parent.staffVsCapacity[staffAssignment[i] - 1];
+                }
+                else
+                {
+                    output += parent.staffVsCapacity[parent.staffVsCapacity.Length - 1];
+                }
             }
         }
 
@@ -85,7 +121,7 @@ public class RuntimeSlide : MonoBehaviour
 
     public void addStaff()
     {
-        if(currentStaff <= parent.maxStaff && gm.staffAvailable >= 1)
+        if(currentStaff < parent.maxStaff && gm.staffAvailable >= 1)
         {
             gm.staffAvailable -= 1;
             currentStaff += 1;
@@ -95,17 +131,27 @@ public class RuntimeSlide : MonoBehaviour
     public void removeStaff()
     {
         int laneCount = 0;
-        foreach(bool b in lanesOpen)
+        if(closed)
         {
-            if(b)
+            if(currentStaff > 0)
             {
-                laneCount += 1;
+                currentStaff -= 1;
             }
         }
-        if(currentStaff > laneCount)
+        else
         {
-            gm.staffAvailable += 1;
-            currentStaff -= 1;
+            foreach(bool b in lanesOpen)
+            {
+                if(b)
+                {
+                    laneCount += 1;
+                }
+            }
+            if(currentStaff > laneCount)
+            {
+                gm.staffAvailable += 1;
+                currentStaff -= 1;
+            }
         }
     }
 }
