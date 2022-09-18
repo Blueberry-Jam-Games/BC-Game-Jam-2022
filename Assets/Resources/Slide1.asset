@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0adce00612b4d4c48916e9110e011663, type: 3}
   m_Name: Slide1
   m_EditorClassIdentifier: 
-  maxStaff: 1
+  maxStaff: 9
   staffVsCapacity:
   - 0.0125
+  - 0.02
+  - 0.023
   damageThreshold: 0
   waterDraw: 0
   demand: 5

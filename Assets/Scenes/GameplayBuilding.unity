@@ -160,7 +160,7 @@ MonoBehaviour:
   closingSoon: 0
   closed: 0
   lanes: 3
-  lanesOpen: 010101
+  lanesOpen: 010000
 --- !u!4 &181754547
 Transform:
   m_ObjectHideFlags: 0
