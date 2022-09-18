@@ -28,6 +28,9 @@ public class RuntimeSlide : MonoBehaviour
     public bool brokenDown = false;
     private float effectiveDamageThreshold = 100f;
 
+    [SerializeField]
+    public List<GameObject> images = new List<GameObject>();
+
     private void Start()
     {
         gm = GameObject.FindWithTag("GameController").GetComponent<GameplayManager>();
@@ -108,6 +111,7 @@ public class RuntimeSlide : MonoBehaviour
     public void closeRide()
     {
         closingSoon = true;
+        Debug.Log("Close");
     }
 
     private int CountOpenLanes()
@@ -150,6 +154,22 @@ public class RuntimeSlide : MonoBehaviour
                 lanesOpen[slide] = false;
             }
         }
+
+        foreach(GameObject go in images)
+        {
+            if(slide == 0)
+            {
+                go.GetComponent<Renderer>().sharedMaterial.SetInt("_Slide1", 0);
+            }
+            else if(slide == 1)
+            {
+                go.GetComponent<Renderer>().sharedMaterial.SetInt("_Slide2", 0);
+            }
+            else
+            {
+                go.GetComponent<Renderer>().sharedMaterial.SetInt("_Slide3", 0);
+            }
+        }
     }
 
     public void openLane(int slide)
@@ -159,6 +179,22 @@ public class RuntimeSlide : MonoBehaviour
         if(gm.availableWater - parent.waterDraw >= 0 && currentStaff > laneCount)
         {
             lanesOpen[slide] = true;
+        }
+
+        foreach(GameObject go in images)
+        {
+            if(slide == 0)
+            {
+                go.GetComponent<Renderer>().sharedMaterial.SetInt("_Slide1", 1);
+            }
+            else if(slide == 1)
+            {
+                go.GetComponent<Renderer>().sharedMaterial.SetInt("_Slide2", 1);
+            }
+            else
+            {
+                go.GetComponent<Renderer>().sharedMaterial.SetInt("_Slide3", 1);
+            }
         }
     }
 
