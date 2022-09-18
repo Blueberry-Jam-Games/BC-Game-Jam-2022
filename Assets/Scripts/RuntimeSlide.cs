@@ -6,8 +6,6 @@ public class RuntimeSlide : MonoBehaviour
 {
     public GameplayManager gm;
 
-    public GameObject breakDownSign;
-
     public string slideName;
 
     public Queue<Person> lineup = new Queue<Person>();
@@ -38,7 +36,6 @@ public class RuntimeSlide : MonoBehaviour
         {
             laneDamage.Add(0);
         }
-        breakDownSign.SetActive(false);
     }
 
     public void NotifyRidership(int people)
@@ -64,7 +61,6 @@ public class RuntimeSlide : MonoBehaviour
         brokenDown = true;
         closed = true;
         capacityThisTick = 0f;
-        breakDownSign.SetActive(true);
 
         while (lineup.Count > 0)
         {
