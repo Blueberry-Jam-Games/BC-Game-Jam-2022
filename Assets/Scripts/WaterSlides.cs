@@ -11,4 +11,5 @@ public class WaterSlides : ScriptableObject
     public float waterDraw;
     public float demand;
     public bool adultRide;
+    public bool isFood;
 }
