@@ -292,176 +292,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1 &225680629
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 225680631}
-  - component: {fileID: 225680630}
-  m_Layer: 0
-  m_Name: GameplayManager
-  m_TagString: GameController
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &225680630
+--- !u!114 &225680630 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 4587518086647932510, guid: ec767b1e324c8c4438d96e51746aaf51,
+    type: 3}
+  m_PrefabInstance: {fileID: 4587518086829570728}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 225680629}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ad829bd4f70e639409bd72beb5aa4840, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeMultiplier: 360
-  hours:
-  - spawnRate: 0
-    minDurration: 0
-    maxDurration: 0
-    adultProbability: 0
-    preLunch: 0
-  - spawnRate: 0
-    minDurration: 0
-    maxDurration: 0
-    adultProbability: 0
-    preLunch: 0
-  - spawnRate: 0
-    minDurration: 0
-    maxDurration: 0
-    adultProbability: 0
-    preLunch: 0
-  - spawnRate: 0
-    minDurration: 0
-    maxDurration: 0
-    adultProbability: 0
-    preLunch: 0
-  - spawnRate: 0
-    minDurration: 0
-    maxDurration: 0
-    adultProbability: 0
-    preLunch: 0
-  - spawnRate: 0
-    minDurration: 0
-    maxDurration: 0
-    adultProbability: 0
-    preLunch: 0
-  - spawnRate: 0
-    minDurration: 0
-    maxDurration: 0
-    adultProbability: 0
-    preLunch: 0
-  - spawnRate: 0
-    minDurration: 0
-    maxDurration: 0
-    adultProbability: 0
-    preLunch: 0
-  - spawnRate: 2
-    minDurration: 120
-    maxDurration: 420
-    adultProbability: 25
-    preLunch: 0
-  - spawnRate: 2
-    minDurration: 180
-    maxDurration: 420
-    adultProbability: 30
-    preLunch: 0
-  - spawnRate: 3
-    minDurration: 180
-    maxDurration: 420
-    adultProbability: 30
-    preLunch: 0
-  - spawnRate: 3
-    minDurration: 180
-    maxDurration: 420
-    adultProbability: 40
-    preLunch: 0
-  - spawnRate: 5
-    minDurration: 180
-    maxDurration: 420
-    adultProbability: 55
-    preLunch: 0
-  - spawnRate: 5
-    minDurration: 180
-    maxDurration: 420
-    adultProbability: 55
-    preLunch: 0
-  - spawnRate: 4
-    minDurration: 180
-    maxDurration: 420
-    adultProbability: 50
-    preLunch: 0
-  - spawnRate: 3
-    minDurration: 180
-    maxDurration: 420
-    adultProbability: 60
-    preLunch: 1
-  - spawnRate: 3
-    minDurration: 180
-    maxDurration: 360
-    adultProbability: 70
-    preLunch: 1
-  - spawnRate: 3
-    minDurration: 180
-    maxDurration: 300
-    adultProbability: 70
-    preLunch: 1
-  - spawnRate: 2
-    minDurration: 180
-    maxDurration: 240
-    adultProbability: 90
-    preLunch: 1
-  - spawnRate: 2
-    minDurration: 60
-    maxDurration: 180
-    adultProbability: 0
-    preLunch: 1
-  - spawnRate: 0
-    minDurration: 60
-    maxDurration: 60
-    adultProbability: 100
-    preLunch: 1
-  - spawnRate: 0
-    minDurration: 0
-    maxDurration: 0
-    adultProbability: 0
-    preLunch: 1
-  - spawnRate: 0
-    minDurration: 0
-    maxDurration: 0
-    adultProbability: 0
-    preLunch: 1
-  - spawnRate: 0
-    minDurration: 0
-    maxDurration: 0
-    adultProbability: 0
-    preLunch: 1
-  allPeople: []
-  totalWater: 1000
-  availableWater: 0
-  staffAvailable: 9
---- !u!4 &225680631
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 225680629}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &800972819
 GameObject:
   m_ObjectHideFlags: 0
@@ -683,3 +525,72 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &4587518086829570728
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4587518086647932509, guid: ec767b1e324c8c4438d96e51746aaf51,
+        type: 3}
+      propertyPath: m_Name
+      value: GameplayManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 4587518086647932511, guid: ec767b1e324c8c4438d96e51746aaf51,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4587518086647932511, guid: ec767b1e324c8c4438d96e51746aaf51,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4587518086647932511, guid: ec767b1e324c8c4438d96e51746aaf51,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4587518086647932511, guid: ec767b1e324c8c4438d96e51746aaf51,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4587518086647932511, guid: ec767b1e324c8c4438d96e51746aaf51,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4587518086647932511, guid: ec767b1e324c8c4438d96e51746aaf51,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4587518086647932511, guid: ec767b1e324c8c4438d96e51746aaf51,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4587518086647932511, guid: ec767b1e324c8c4438d96e51746aaf51,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4587518086647932511, guid: ec767b1e324c8c4438d96e51746aaf51,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4587518086647932511, guid: ec767b1e324c8c4438d96e51746aaf51,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4587518086647932511, guid: ec767b1e324c8c4438d96e51746aaf51,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ec767b1e324c8c4438d96e51746aaf51, type: 3}
