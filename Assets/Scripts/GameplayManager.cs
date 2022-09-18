@@ -103,12 +103,13 @@ public class GameplayManager : MonoBehaviour
 
             while(rs.lineup.Count > 0 && rs.capacityThisTick > rs.lineup.Peek().partySize)
             {
-                Person serverd = rs.lineup.Dequeue();
-                serverd.inLine = false;
-                rs.capacityThisTick -= serverd.partySize;
-                if (!serverd.ridesRidden.Contains(rs))
+                Person served = rs.lineup.Dequeue();
+                served.inLine = false;
+                rs.capacityThisTick -= served.partySize;
+                rs.NotifyRidership(served.partySize);
+                if (!served.ridesRidden.Contains(rs))
                 {
-                    serverd.ridesRidden.Add(rs);
+                    served.ridesRidden.Add(rs);
                 }
             }
         }
