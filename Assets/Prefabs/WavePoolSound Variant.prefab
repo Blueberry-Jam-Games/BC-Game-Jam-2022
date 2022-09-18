@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1666573885}
   - component: {fileID: 1666573886}
   m_Layer: 0
-  m_Name: Scream2 (1)
+  m_Name: Scream3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -168,7 +168,7 @@ PrefabInstance:
     - target: {fileID: 3164574846910784900, guid: b6f6fce7c30bb594c9c3b91e42886dc2,
         type: 3}
       propertyPath: m_Name
-      value: WavePoolSound
+      value: WavePoolSound Variant
       objectReference: {fileID: 0}
     - target: {fileID: 3164574846910784922, guid: b6f6fce7c30bb594c9c3b91e42886dc2,
         type: 3}
