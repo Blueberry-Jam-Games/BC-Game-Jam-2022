@@ -112,12 +112,11 @@ public class RuntimeSlide : MonoBehaviour
         int laneCount = 0;
 
 
-            foreach(bool b in lanesOpen)
+        foreach(bool b in lanesOpen)
+        {
+            if(b)
             {
-                if(b)
-                {
-                    laneCount += 1;
-                }
+                laneCount += 1;
             }
         }
         return laneCount;
