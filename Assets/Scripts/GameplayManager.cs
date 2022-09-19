@@ -169,7 +169,7 @@ public class GameplayManager : MonoBehaviour
                         {
                             if(GetHour() <= 10)
                             {
-                                foodImpact = 1;
+                                foodImpact = 0.75f;
                             }
                             else if(GetHour() <= 12)
                             {
@@ -185,7 +185,7 @@ public class GameplayManager : MonoBehaviour
                             }
                             else if(GetHour() <= 18)
                             {
-                                foodImpact = 1f;
+                                foodImpact = 0.75f;
                             }
                             else
                             {

@@ -17,9 +17,17 @@ MonoBehaviour:
   - 0.05
   - 0.075
   - 0.09
+  - 0.09
+  - 0.09
+  - 0.09
+  - 0.09
+  - 0.09
+  - 0.09
+  - 0.09
   damageThreshold: 100
-  damageMultiplier: 0.0125
-  repairMultiplier: 0.0025
+  damageMultiplier: 0.125
+  repairMultiplier: 0.025
   waterDraw: 300
-  demand: 2
+  demand: 4
   adultRide: 0
+  isFood: 0

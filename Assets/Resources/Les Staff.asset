@@ -10,12 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0adce00612b4d4c48916e9110e011663, type: 3}
-  m_Name: Slide1
+  m_Name: Les Staff
   m_EditorClassIdentifier: 
   maxStaff: 9
   staffVsCapacity:
   - 0.0125
   - 0.02
+  - 0.023
+  - 0.023
+  - 0.023
+  - 0.023
+  - 0.023
+  - 0.023
+  - 0.023
   - 0.023
   damageThreshold: 150
   damageMultiplier: 0.25
