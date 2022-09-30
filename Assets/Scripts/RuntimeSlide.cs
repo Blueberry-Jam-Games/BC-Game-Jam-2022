@@ -158,22 +158,6 @@ public class RuntimeSlide : MonoBehaviour
         }
 
         UpdateRideMaterials();
-
-        // foreach(GameObject go in images)
-        // {
-        //     if(slide == 0)
-        //     {
-        //         go.GetComponent<Renderer>().sharedMaterial.SetInt("_Slide1", 0);
-        //     }
-        //     else if(slide == 1)
-        //     {
-        //         go.GetComponent<Renderer>().sharedMaterial.SetInt("_Slide2", 0);
-        //     }
-        //     else
-        //     {
-        //         go.GetComponent<Renderer>().sharedMaterial.SetInt("_Slide3", 0);
-        //     }
-        // }
     }
 
     public void openLane(int slide)
@@ -186,22 +170,6 @@ public class RuntimeSlide : MonoBehaviour
         }
 
         UpdateRideMaterials();
-
-        // foreach(GameObject go in images)
-        // {
-        //     if(slide == 0)
-        //     {
-        //         go.GetComponent<Renderer>().sharedMaterial.SetInt("_Slide1", 1);
-        //     }
-        //     else if(slide == 1)
-        //     {
-        //         go.GetComponent<Renderer>().sharedMaterial.SetInt("_Slide2", 1);
-        //     }
-        //     else
-        //     {
-        //         go.GetComponent<Renderer>().sharedMaterial.SetInt("_Slide3", 1);
-        //     }
-        // }
     }
 
     private void UpdateRideMaterials()
