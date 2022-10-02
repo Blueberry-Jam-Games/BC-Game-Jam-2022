@@ -10,23 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0adce00612b4d4c48916e9110e011663, type: 3}
-  m_Name: Les Staff
+  m_Name: TubeSlide
   m_EditorClassIdentifier: 
   maxStaff: 9
   staffVsCapacity:
   - 0.0125
   - 0.02
   - 0.023
-  - 0.023
-  - 0.023
-  - 0.023
-  - 0.023
-  - 0.023
-  - 0.023
-  - 0.023
-  damageThreshold: 150
-  damageMultiplier: 0.25
-  repairMultiplier: 0.25
+  damageThreshold: 75
+  damageMultiplier: 0.5
+  repairMultiplier: 0.0005
   waterDraw: 200
   demand: 5
   adultRide: 1

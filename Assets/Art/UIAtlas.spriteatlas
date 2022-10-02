@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: UIAtlas
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 8
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 0
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: 064a3993225085c4c96782d93d85bb4d, type: 3}
+    - {fileID: 2800000, guid: 3318214553908354c89f9b78c6a8313c, type: 3}
+    - {fileID: 2800000, guid: 5001d80e9024758488f288355cef9f64, type: 3}
+    - {fileID: 2800000, guid: 638ef1fce6eac45e5abc5d8d8d9e9451, type: 3}
+    - {fileID: 2800000, guid: 1cb62274353994571b71b388fafdb0b6, type: 3}
+    - {fileID: 2800000, guid: 6dac21dedcfc6a446ae6911fbd4a8659, type: 3}
+    - {fileID: 2800000, guid: c5220b6dfbfcde7469abe72d5a4dc1e9, type: 3}
+    - {fileID: 2800000, guid: 4824188a463e81f4db03f67283a218d8, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 064a3993225085c4c96782d93d85bb4d, type: 3}
+  - {fileID: 21300000, guid: 1cb62274353994571b71b388fafdb0b6, type: 3}
+  - {fileID: 21300000, guid: 3318214553908354c89f9b78c6a8313c, type: 3}
+  - {fileID: 21300000, guid: 4824188a463e81f4db03f67283a218d8, type: 3}
+  - {fileID: 21300000, guid: 638ef1fce6eac45e5abc5d8d8d9e9451, type: 3}
+  - {fileID: 21300000, guid: c5220b6dfbfcde7469abe72d5a4dc1e9, type: 3}
+  - {fileID: 21300000, guid: 5001d80e9024758488f288355cef9f64, type: 3}
+  - {fileID: 21300000, guid: 6dac21dedcfc6a446ae6911fbd4a8659, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - checked-box
+  - OutofOrderSign
+  - down-arrow
+  - unchecked-box
+  - InfoBox
+  - top-bar
+  - up-arrow
+  - selection-box
+  m_RenderDataMap: {}
+  m_Tag: UIAtlas
+  m_IsVariant: 0

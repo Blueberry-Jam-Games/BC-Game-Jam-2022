@@ -7,14 +7,14 @@ public class GameplayManager : MonoBehaviour
 {
     [Header("Time Management")]
     [SerializeField]
-    private float timeMultiplier = 360f;
+    private float timeMultiplier = 60f;
 
     private DateTime currentTime;
 
     [Header("Tuning")]
     public List<HourTuning> hours = new List<HourTuning>(24);
 
-    public LinkedList<Person> allPeople = new LinkedList<Person>();
+    public List<Person> allPeople = new List<Person>();
 
     private List<RuntimeSlide> allSlides = new List<RuntimeSlide>();
 
@@ -24,21 +24,20 @@ public class GameplayManager : MonoBehaviour
 
     List<Person> tagRemoval = new List<Person>();
 
-    public int staffAvailable = 9;
+    public int staffAvailable = 12;
 
-    public float avgHappieness;
+    public float avgHappieness = 0f;
 
     void Start()
     {
-        //Debug.Log("Start");
-        currentTime = new DateTime(2022, 08, 01, 7, 0, 0);
+        currentTime = new DateTime(2022, 08, 01, 7, 45, 0);
         GameObject[] slides = GameObject.FindGameObjectsWithTag("WaterSlide");
         foreach(GameObject go in slides)
         {
             allSlides.Add(go.GetComponent<RuntimeSlide>());
         }
     }
-    
+
     private void FixedUpdate()
     {
         CreateNewPeople();
@@ -72,7 +71,7 @@ public class GameplayManager : MonoBehaviour
         {
             if (UnityEngine.Random.Range(0, 100) < 9)
             {
-                allPeople.AddLast(new Person(UnityEngine.Random.Range(0, 100) < ht.adultProbability, UnityEngine.Random.Range(ht.minDurration, ht.maxDurration),
+                allPeople.Add(new Person(UnityEngine.Random.Range(0, 100) < ht.adultProbability, UnityEngine.Random.Range(ht.minDurration, ht.maxDurration),
                     ht.preLunch, UnityEngine.Random.Range(1, 6), currentTime));
             }
         }
@@ -130,6 +129,7 @@ public class GameplayManager : MonoBehaviour
                 served.inLine = false;
                 rs.capacityThisTick -= served.partySize;
                 rs.NotifyRidership(served.partySize);
+                UpdateHappieness(served.timeInLine, served.previousDemand);
                 if (!served.ridesRidden.Contains(rs))
                 {
                     served.ridesRidden.Add(rs);
@@ -153,8 +153,6 @@ public class GameplayManager : MonoBehaviour
                 RuntimeSlide highestDemandSoFar = null;
                 bool unriddenRide = false;
 
-                updateHappieness(p.timeInLine, p.previousDemand);
-
                 float previousDemand = 0;
                 for(int i = 0, count = allSlides.Count; i < count; i++)
                 {
@@ -163,7 +161,7 @@ public class GameplayManager : MonoBehaviour
                         RuntimeSlide current = allSlides[i];
                         bool ridden = p.ridesRidden.Contains(current);
                         bool matchesAge = p.adults == current.parent.adultRide;
-                        float foodImpact = 1;
+                        float foodImpact = 0;
 
                         if(current.parent.isFood && !p.hadLunch)
                         {
@@ -192,7 +190,7 @@ public class GameplayManager : MonoBehaviour
                                 foodImpact = 2f;
                             }
                         }
-                        else
+                        else if (!p.hadLunch)
                         {
                             foodImpact = 0.25f;
                         }
@@ -233,19 +231,38 @@ public class GameplayManager : MonoBehaviour
                     }
                 }
             }
+            else
+            {
+
+            }
         }
     }
 
-    public void updateHappieness(float timeInLine, float demand)
+    private void UpdateHappieness(float timeInLine, float demand)
     {
+        // Debug.Log($"Updating Happieness with time in line {timeInLine} on ride demand {demand}");
         if(avgHappieness == 0)
         {
-            avgHappieness = (demand / (timeInLine / 10));
+            Debug.Log("Average = 0");
+            avgHappieness = HappienessFunction(timeInLine, demand);
         }
         else
         {
             avgHappieness *= 0.95f;
-            avgHappieness += (demand / (timeInLine / 10)) * 0.05f;
+            avgHappieness += HappienessFunction(timeInLine, demand) * 0.05f;
+        }
+        // Debug.Log($"Average happieness now {avgHappieness}");
+    }
+
+    private float HappienessFunction(float timeInLine, float demand)
+    {
+        if (timeInLine == 0)
+        {
+            return demand / 10f;
+        }
+        else
+        {
+            return demand / (timeInLine / 10);
         }
     }
 

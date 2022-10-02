@@ -849,12 +849,12 @@ PrefabInstance:
         type: 3}
       propertyPath: parent
       value: 
-      objectReference: {fileID: 11400000, guid: 6823ffa0c8bbfc240ac9cd77d406466c,
+      objectReference: {fileID: 11400000, guid: d52b4ab1af3573741a4aee8358e55570,
         type: 2}
     - target: {fileID: 827591091047322323, guid: 1c19c3df4de694908ad7263c8a2fafac,
         type: 3}
       propertyPath: slideName
-      value: Singles Slide
+      value: Tube Slide
       objectReference: {fileID: 0}
     - target: {fileID: 827591091047322323, guid: 1c19c3df4de694908ad7263c8a2fafac,
         type: 3}
@@ -1474,10 +1474,20 @@ PrefabInstance:
       propertyPath: laneDamage.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 827591091047322323, guid: 1c19c3df4de694908ad7263c8a2fafac,
+        type: 3}
+      propertyPath: lanesOpen.Array.data[0]
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 827591091047322332, guid: 1c19c3df4de694908ad7263c8a2fafac,
         type: 3}
       propertyPath: m_Name
       value: LazyRiver
+      objectReference: {fileID: 0}
+    - target: {fileID: 967427727357188035, guid: 1c19c3df4de694908ad7263c8a2fafac,
+        type: 3}
+      propertyPath: m_IsOn
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1107807024690914811, guid: 1c19c3df4de694908ad7263c8a2fafac,
         type: 3}
@@ -1623,6 +1633,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3427262240367771199, guid: 1c19c3df4de694908ad7263c8a2fafac,
+        type: 3}
+      propertyPath: m_IsOn
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3542377459157864667, guid: 1c19c3df4de694908ad7263c8a2fafac,
         type: 3}
@@ -2666,6 +2681,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 827591091047322323, guid: 1c19c3df4de694908ad7263c8a2fafac,
         type: 3}
+      propertyPath: parent
+      value: 
+      objectReference: {fileID: 11400000, guid: d9719b4b86e3b0b4d834f6323bdfde1b,
+        type: 2}
+    - target: {fileID: 827591091047322323, guid: 1c19c3df4de694908ad7263c8a2fafac,
+        type: 3}
       propertyPath: slideName
       value: Wave Pool
       objectReference: {fileID: 0}
@@ -2689,10 +2710,20 @@ PrefabInstance:
       propertyPath: laneDamage.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 827591091047322323, guid: 1c19c3df4de694908ad7263c8a2fafac,
+        type: 3}
+      propertyPath: lanesOpen.Array.data[0]
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 827591091047322332, guid: 1c19c3df4de694908ad7263c8a2fafac,
         type: 3}
       propertyPath: m_Name
       value: WavePool
+      objectReference: {fileID: 0}
+    - target: {fileID: 967427727357188035, guid: 1c19c3df4de694908ad7263c8a2fafac,
+        type: 3}
+      propertyPath: m_IsOn
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1107807024690914811, guid: 1c19c3df4de694908ad7263c8a2fafac,
         type: 3}
@@ -2838,6 +2869,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3427262240367771199, guid: 1c19c3df4de694908ad7263c8a2fafac,
+        type: 3}
+      propertyPath: m_IsOn
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3542377459157864667, guid: 1c19c3df4de694908ad7263c8a2fafac,
         type: 3}
@@ -3113,6 +3149,11 @@ PrefabInstance:
         type: 3}
       propertyPath: totalWater
       value: 10000
+      objectReference: {fileID: 0}
+    - target: {fileID: 4587518086647932510, guid: ec767b1e324c8c4438d96e51746aaf51,
+        type: 3}
+      propertyPath: timeMultiplier
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 4587518086647932511, guid: ec767b1e324c8c4438d96e51746aaf51,
         type: 3}
@@ -3483,6 +3524,12 @@ PrefabInstance:
       propertyPath: lanes
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 827591091047322323, guid: 1c19c3df4de694908ad7263c8a2fafac,
+        type: 3}
+      propertyPath: parent
+      value: 
+      objectReference: {fileID: 11400000, guid: 7ef9f6a63a3b0894b9669704f9e11992,
+        type: 2}
     - target: {fileID: 827591091047322323, guid: 1c19c3df4de694908ad7263c8a2fafac,
         type: 3}
       propertyPath: slideName

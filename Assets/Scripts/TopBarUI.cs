@@ -30,10 +30,9 @@ public class TopBarUI : MonoBehaviour
     void UpdateUI()
     {
         totalStaff.text = $"Staff: {gm.staffAvailable}";
-        totalWater.text = $"Available Water: {gm.availableWater}";
+        totalWater.text = $"Available Water: {Mathf.Round(gm.availableWater)}";
         time.text = gm.GetTime();
         totalPeople.text = $"Total Guest: {gm.GetTotalPeople()}";
-        happiness.text = $"Happiness Score: {gm.avgHappieness}";
-
+        happiness.text = $"Happiness Score: {Mathf.Round(gm.avgHappieness)}";
     }
 }

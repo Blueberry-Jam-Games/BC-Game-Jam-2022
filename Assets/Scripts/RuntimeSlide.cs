@@ -39,6 +39,8 @@ public class RuntimeSlide : MonoBehaviour
         {
             laneDamage.Add(0);
         }
+
+        UpdateRideMaterials();
     }
 
     public void NotifyRidership(int people)
@@ -155,21 +157,7 @@ public class RuntimeSlide : MonoBehaviour
             }
         }
 
-        foreach(GameObject go in images)
-        {
-            if(slide == 0)
-            {
-                go.GetComponent<Renderer>().sharedMaterial.SetInt("_Slide1", 0);
-            }
-            else if(slide == 1)
-            {
-                go.GetComponent<Renderer>().sharedMaterial.SetInt("_Slide2", 0);
-            }
-            else
-            {
-                go.GetComponent<Renderer>().sharedMaterial.SetInt("_Slide3", 0);
-            }
-        }
+        UpdateRideMaterials();
     }
 
     public void openLane(int slide)
@@ -181,19 +169,27 @@ public class RuntimeSlide : MonoBehaviour
             lanesOpen[slide] = true;
         }
 
-        foreach(GameObject go in images)
+        UpdateRideMaterials();
+    }
+
+    private void UpdateRideMaterials()
+    {
+        for (int i = 0, count = 3; i < count; i++)
         {
-            if(slide == 0)
+            foreach(GameObject go in images)
             {
-                go.GetComponent<Renderer>().sharedMaterial.SetInt("_Slide1", 1);
-            }
-            else if(slide == 1)
-            {
-                go.GetComponent<Renderer>().sharedMaterial.SetInt("_Slide2", 1);
-            }
-            else
-            {
-                go.GetComponent<Renderer>().sharedMaterial.SetInt("_Slide3", 1);
+                if(i == 0 && i < lanes)
+                {
+                    go.GetComponent<Renderer>().sharedMaterial.SetInt("_Slide1", lanesOpen[i] ? 1 : 0);
+                }
+                else if(i == 1 && i < lanes)
+                {
+                    go.GetComponent<Renderer>().sharedMaterial.SetInt("_Slide2", lanesOpen[i] ? 1 : 0);
+                }
+                else if (i == 2 && i < lanes)
+                {
+                    go.GetComponent<Renderer>().sharedMaterial.SetInt("_Slide3", lanesOpen[i] ? 1 : 0);
+                }
             }
         }
     }

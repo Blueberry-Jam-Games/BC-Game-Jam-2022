@@ -10,17 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0adce00612b4d4c48916e9110e011663, type: 3}
-  m_Name: Lunch
+  m_Name: WavePool
   m_EditorClassIdentifier: 
-  maxStaff: 3
+  maxStaff: 9
   staffVsCapacity:
+  - 0.05
   - 0.075
-  - 0.1
+  - 0.09
+  - 0.09
+  - 0.09
+  - 0.09
+  - 0.09
+  - 0.09
+  - 0.09
   - 0.15
-  damageThreshold: 150
+  damageThreshold: 125
   damageMultiplier: 0.15
-  repairMultiplier: 0.05
-  waterDraw: 100
-  demand: 3
+  repairMultiplier: 0.0015
+  waterDraw: 500
+  demand: 5
   adultRide: 0
-  isFood: 1
+  isFood: 0

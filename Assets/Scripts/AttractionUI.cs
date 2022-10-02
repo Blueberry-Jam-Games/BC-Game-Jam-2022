@@ -27,14 +27,40 @@ public class AttractionUI : MonoBehaviour
     {
         rideName.text = ride.slideName;
         waterUsage.text = $"Water Usage: {ride.parent.waterDraw}";
-        DrawLines();
+        DrawLanes();
         UpdateUI();
+        RefreshUI();
         upButton.onClick.AddListener(IncreaseStaff);
         downButton.onClick.AddListener(DecreaseStaff);
         toggle1.onValueChanged.AddListener(openLine1);
         toggle2.onValueChanged.AddListener(openLine2);
         toggle3.onValueChanged.AddListener(openLine3);
         openToggle.onValueChanged.AddListener(openRide);
+
+        gameObject.SetActive(false);
+    }
+
+    private void OnEnable()
+    {
+        RefreshUI();
+    }
+
+    // not update because we don't need it every frame
+    private void RefreshUI()
+    {
+        openToggle.SetIsOnWithoutNotify(!ride.closed && !ride.closingSoon);
+        if (ride.lanes >= 1)
+        {
+            toggle1.SetIsOnWithoutNotify(ride.lanesOpen[0]);
+        }
+        if (ride.lanes >= 2)
+        {
+            toggle2.SetIsOnWithoutNotify(ride.lanesOpen[1]);
+        }
+        if (ride.lanes >= 3)
+        {
+            toggle3.SetIsOnWithoutNotify(ride.lanesOpen[2]);
+        }
     }
 
     // Update is called once per frame
@@ -48,7 +74,7 @@ public class AttractionUI : MonoBehaviour
         staff.text = ride.currentStaff.ToString();
     }
 
-    void DrawLines()
+    void DrawLanes()
     {
         List<GameObject> lanes = new List<GameObject>(){line1, line2, line3};
         for (int i = 0; i<3; i++) {
@@ -73,10 +99,12 @@ public class AttractionUI : MonoBehaviour
         if (open) 
         {
             ride.openLane(0);
-        } else 
+        }
+        else 
         {
             ride.closeLane(0);
         }
+        RefreshUI();
     }
 
     void openLine2(bool open)
@@ -84,10 +112,12 @@ public class AttractionUI : MonoBehaviour
         if (open) 
         {
             ride.openLane(1);
-        } else 
+        }
+        else
         {
             ride.closeLane(1);
         }
+        RefreshUI();
     }
 
     void openLine3(bool open)
@@ -95,10 +125,12 @@ public class AttractionUI : MonoBehaviour
         if (open) 
         {
             ride.openLane(2);
-        } else 
+        }
+        else 
         {
             ride.closeLane(2);
         }
+        RefreshUI();
     }
 
     void openRide(bool open)
@@ -107,9 +139,11 @@ public class AttractionUI : MonoBehaviour
         if (open)
         {
             ride.openRide();
-        } else
+        }
+        else
         {
             ride.closeRide();
         }
+        RefreshUI();
     }
 }

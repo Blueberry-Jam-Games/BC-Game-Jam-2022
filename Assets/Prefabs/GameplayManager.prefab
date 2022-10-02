@@ -166,6 +166,8 @@ MonoBehaviour:
     maxDurration: 0
     adultProbability: 0
     preLunch: 1
+  allPeople: []
   totalWater: 1000
   availableWater: 0
-  staffAvailable: 9
+  staffAvailable: 12
+  avgHappieness: 0

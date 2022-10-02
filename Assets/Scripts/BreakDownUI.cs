@@ -22,11 +22,21 @@ public class BreakDownUI : MonoBehaviour
 
     void UpdateUI()
     {
-        if (ride.brokenDown) {
-            this.gameObject.SetActive(true);
+        if (ride.brokenDown)
+        {
+            SetChildrenActive(true);
         } else
         {
-            this.gameObject.SetActive(false);
+            SetChildrenActive(false);
+        }
+    }
+
+    private void SetChildrenActive(bool active)
+    {
+        for (int i = 0, count = transform.childCount; i < count; i++)
+        {
+            Transform child = transform.GetChild(i);
+            child.gameObject.SetActive(active);
         }
     }
 }
